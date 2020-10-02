@@ -1,6 +1,6 @@
 ﻿namespace DMicroservices.RabbitMq.Consumer
 {
-    public interface IBasicConsumer
+    public interface IConsumer
     {
         string ListenQueueName { get;}
 

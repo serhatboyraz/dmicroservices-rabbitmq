@@ -12,7 +12,7 @@ namespace DMicroservices.RabbitMq.Consumer
     /// Consuming base
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class BasicConsumer<T> : IBasicConsumer
+    public abstract class BasicConsumer<T> : IConsumer
     {
         public abstract string ListenQueueName { get; }
 

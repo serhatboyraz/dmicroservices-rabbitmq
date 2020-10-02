@@ -1,4 +1,5 @@
 ﻿using System;
+using DMicroservices.RabbitMq.Base;
 using DMicroservices.RabbitMq.Producer;
 
 namespace DMicroservices.RabbitMq.Test
@@ -7,7 +8,7 @@ namespace DMicroservices.RabbitMq.Test
     {
         static void Main(string[] args)
         {
-            var exampleQueue = new ExampleConsumer();
+            ConsumerRegistry.Instance.Register(typeof(ExampleConsumer));
 
             RabbitMqPublisher<ExampleModel>.Instance.Publish("ExampleQueue", new ExampleModel()
             {
