@@ -8,11 +8,12 @@ namespace DMicroservices.RabbitMq.Test
     {
         static void Main(string[] args)
         {
-            ConsumerRegistry.Instance.Register(typeof(ExampleConsumer));
 
-            RabbitMqPublisher<ExampleModel>.Instance.Publish("ExampleQueue", new ExampleModel()
+            ConsumerRegistry.Instance.Register(typeof(ExampleModel));
+
+            RabbitMqPublisher<ExampleModel>.Instance.Publish("Test",new ExampleModel()
             {
-                Message = "hello world"
+                Message = "sdfghjkoıuytf"
             });
 
             Console.ReadLine();

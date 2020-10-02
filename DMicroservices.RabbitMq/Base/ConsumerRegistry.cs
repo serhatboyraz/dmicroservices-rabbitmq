@@ -24,7 +24,7 @@ namespace DMicroservices.RabbitMq.Base
 
         public void Register(Type consumer)
         {
-            if (consumer.GetInterfaces().Any(x => x.GetInterface("IConsumer") != null))
+            if (consumer.GetInterfaces().Length == 0 || consumer.GetInterfaces().Any(x => x.GetInterface("IConsumer") != null))
                 throw new Exception("Consumer must be implement IConsumer.");
 
             if (ConsumerList.Any(x => x.GetType() == consumer))
