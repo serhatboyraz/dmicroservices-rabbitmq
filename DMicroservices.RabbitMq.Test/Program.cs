@@ -13,7 +13,7 @@ namespace DMicroservices.RabbitMq.Test
 
             RabbitMqPublisher<ExampleModel>.Instance.Publish("Test",new ExampleModel()
             {
-                Message = "sdfghjkoıuytf"
+                Message = "hello world."
             });
 
             Console.ReadLine();
