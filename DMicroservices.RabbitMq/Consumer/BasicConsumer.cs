@@ -18,7 +18,7 @@ namespace DMicroservices.RabbitMq.Consumer
 
         public abstract bool AutoAck { get; }
 
-        public abstract Action<T,ulong> DataReceivedAction { get; }
+        public virtual Action<T, BasicDeliverEventArgs> DataReceivedAction { get; }
 
 
         /// <summary>
@@ -73,12 +73,17 @@ namespace DMicroservices.RabbitMq.Consumer
         private void DocumentConsumerOnReceived(object sender, BasicDeliverEventArgs e)
         {
             var jsonData = Encoding.UTF8.GetString(e.Body.ToArray());
-            DataReceivedAction(JsonConvert.DeserializeObject<T>(jsonData), e.DeliveryTag);
+            DataReceivedAction(JsonConvert.DeserializeObject<T>(jsonData), e);
         }
 
         protected void BasicAck(ulong deliveryTag, bool multiple)
         {
             _rabitMqChannel.BasicAck(deliveryTag, multiple);
+        }
+
+        protected EventingBasicConsumer GetCurrentConsumer()
+        {
+            return _eventingBasicConsumer;
         }
     }
 }
