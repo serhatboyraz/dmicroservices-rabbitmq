@@ -9,6 +9,13 @@ namespace DMicroservices.RabbitMq.Base
     /// </summary>
     public class RabbitMqConnection
     {
+        #region Singleton Section
+        private static readonly Lazy<RabbitMqConnection> _instance = new Lazy<RabbitMqConnection>(() => new RabbitMqConnection());
+
+
+        public static RabbitMqConnection Instance => _instance.Value;
+        #endregion
+
         #region Constructor
 
         /// <summary>

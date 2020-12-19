@@ -20,28 +20,6 @@ namespace DMicroservices.RabbitMq.Consumer
 
         public virtual Action<T, BasicDeliverEventArgs> DataReceivedAction { get; }
 
-
-        /// <summary>
-        /// Rabbitmq bağlantısı getirmek için oluşturulan class
-        /// </summary>
-        private RabbitMqConnection _rabbitMqConnection;
-
-        /// <summary>
-        /// Rabbitmq bağlantısı getirmek için oluşturulan class
-        /// </summary>
-        public RabbitMqConnection RabbitMqConnection
-        {
-            get
-            {
-                if (_rabbitMqConnection == null || !_rabbitMqConnection.IsConnected)
-                {
-                    _rabbitMqConnection = new RabbitMqConnection();
-                }
-
-                return _rabbitMqConnection;
-            }
-        }
-
         /// <summary>
         /// Modeli dinlemek için kullanıclan event
         /// </summary>
@@ -57,7 +35,7 @@ namespace DMicroservices.RabbitMq.Consumer
                 {
                     ElasticLogger.Instance.Info("Consumer QueueName was null");
                 }
-                _rabitMqChannel = RabbitMqConnection.GetChannel(ListenQueueName);
+                _rabitMqChannel = RabbitMqConnection.Instance.GetChannel(ListenQueueName);
                 _eventingBasicConsumer = new EventingBasicConsumer(_rabitMqChannel);
                 _eventingBasicConsumer.Received += DocumentConsumerOnReceived;
                 _rabitMqChannel.BasicConsume(ListenQueueName, AutoAck, _eventingBasicConsumer);

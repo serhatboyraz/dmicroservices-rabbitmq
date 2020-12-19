@@ -11,7 +11,6 @@ namespace DMicroservices.RabbitMq.Base
     {
         private List<IConsumer> ConsumerList { get; set; }
 
-
         #region Singleton Section
         private static readonly Lazy<ConsumerRegistry> _instance = new Lazy<ConsumerRegistry>(() => new ConsumerRegistry());
 

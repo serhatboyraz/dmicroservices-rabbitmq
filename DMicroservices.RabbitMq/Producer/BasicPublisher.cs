@@ -25,28 +25,10 @@ namespace DMicroservices.RabbitMq.Producer
         #endregion
 
         #region Member
-        /// <summary>
-        /// Rabbitmq bağlantısı getirmek için oluşturulan class
-        /// </summary>
-        private RabbitMqConnection _rabbitMqConnection;
 
         #endregion
 
         #region Property
-
-        /// <summary>
-        /// Rabbitmq bağlantısı almak için
-        /// </summary>
-        private RabbitMqConnection RabbitMqConnection
-        {
-            get
-            {
-                if (_rabbitMqConnection == null || !_rabbitMqConnection.IsConnected)
-                    _rabbitMqConnection = new RabbitMqConnection();
-                return _rabbitMqConnection;
-            }
-        }
-
 
         #endregion
 
@@ -66,7 +48,7 @@ namespace DMicroservices.RabbitMq.Producer
                     ElasticLogger.Instance.Info("QueueName was null");
                     return;
                 }
-                using (IModel channel = RabbitMqConnection.GetChannel(queueName))
+                using (IModel channel = RabbitMqConnection.Instance.GetChannel(queueName))
                 {
                     string jsonData = JsonConvert.SerializeObject(message);
                     channel.BasicPublish(string.Empty, queueName, null, Encoding.UTF8.GetBytes(jsonData));
