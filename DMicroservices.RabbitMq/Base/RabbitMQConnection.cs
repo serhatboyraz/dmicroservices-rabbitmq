@@ -73,13 +73,11 @@ namespace DMicroservices.RabbitMq.Base
         /// <summary>
         /// Channel oluşturup döner
         /// </summary>
-        /// <param name="queueName"></param>
         /// <returns></returns>
         public IModel GetChannel(string queueName)
         {
             IModel channel = Connection.CreateModel();
-            channel.QueueDeclare(queueName, false, false, true, null);
-
+            channel.QueueDeclare(queueName, true, false, false, null);
             return channel;
         }
 

@@ -18,6 +18,8 @@ namespace DMicroservices.RabbitMq.Consumer
 
         public abstract bool AutoAck { get; }
 
+        public virtual ushort PrefectCount { get; set; }
+
         public virtual Action<T, BasicDeliverEventArgs> DataReceivedAction { get; }
 
         /// <summary>
@@ -36,6 +38,9 @@ namespace DMicroservices.RabbitMq.Consumer
                     ElasticLogger.Instance.Info("Consumer QueueName was null");
                 }
                 _rabitMqChannel = RabbitMqConnection.Instance.GetChannel(ListenQueueName);
+                if (PrefectCount != 0)
+                    _rabitMqChannel.BasicQos(0, PrefectCount, false);
+
                 _eventingBasicConsumer = new EventingBasicConsumer(_rabitMqChannel);
                 _eventingBasicConsumer.Received += DocumentConsumerOnReceived;
                 _rabitMqChannel.BasicConsume(ListenQueueName, AutoAck, _eventingBasicConsumer);
@@ -45,7 +50,7 @@ namespace DMicroservices.RabbitMq.Consumer
                 ElasticLogger.Instance.Error(ex, "RabbitMQ/RabbitmqConsumer");
             }
 
-          
+
         }
 
         private void DocumentConsumerOnReceived(object sender, BasicDeliverEventArgs e)
